@@ -10,23 +10,30 @@ Public Class FormPersona
     End Sub
 
     Protected Sub btn_guardar_Click(sender As Object, e As EventArgs)
-        persona.Nombre = txt_nombre.Text
-        persona.Apellido1 = txt_apellido.Text
-        persona.Apellido2 = txt_apellido.Text
-        persona.FechaNacimiento = txt_edad.Text
+        Try
+            persona.Nombre = txtNombre.Text
+            persona.Apellido1 = txtApellido1.Text
+            persona.Apellido2 = txtApellido2.Text
+            persona.FechaNacimiento = txtfechaNacimiento.Text
+            persona.Nacionalidad = txtNacionalidad.Text
+            persona.Telefono = txtTelefono.Text
 
-        'lbl_mensaje.Text = dbHelper.create(persona)
+            lbl_mensaje.Text = dbHelper.create(persona)
+            txtNombre.Text = ""
+            txtApellido1.Text = ""
+            txtApellido2.Text = ""
+            txtfechaNacimiento.Text = ""
 
 
-        If dbHelper.create(persona) Then
-            lbl_mensaje.Text = "Persona Creada"
-            txt_nombre.Text = ""
-            txt_apellido.Text = ""
-            txt_edad.Text = ""
-        Else
-            lbl_mensaje.Text = "Ocurrio un error"
-        End If
-        GV_personas.DataBind()
+
+            GV_personas.DataBind()
+
+        Catch ex As Exception
+            lbl_mensaje.Text = "Error al guardar la persona: " & ex.Message
+
+        End Try
+
+
 
     End Sub
 
@@ -80,9 +87,10 @@ Public Class FormPersona
         Dim id As Integer = Convert.ToInt32(row.Cells(2).Text)
         Dim persona As Persona = New Persona()
 
-        txt_nombre.Text = row.Cells(3).Text
-        txt_apellido.Text = row.Cells(4).Text
-        txt_edad.Text = row.Cells(5).Text
+        txtNombre.Text = row.Cells(3).Text
+        txtApellido1.Text = row.Cells(4).Text
+        txtApellido2.Text = row.Cells(4).Text
+        txtfechaNacimiento.Text = row.Cells(5).Text
 
         editando.Value = id
 
@@ -92,10 +100,10 @@ Public Class FormPersona
 
 
         Dim persona As Persona = New Persona With {
-            .Nombre = txt_nombre.Text,
-            .Apellido1 = txt_apellido.Text,
-            .Apellido2 = txt_apellido.Text,
-            .FechaNacimiento = txt_edad.Text,
+            .Nombre = txtNombre.Text,
+            .Apellido1 = txtApellido1.Text,
+            .Apellido2 = txtApellido2.Text,
+            .FechaNacimiento = txtfechaNacimiento.Text,
             .IdPersona = editando.Value()
         }
         dbHelper.update(persona)

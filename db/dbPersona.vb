@@ -1,88 +1,72 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class dbPersona
+    Public ReadOnly ConectionString As String = ConfigurationManager.ConnectionStrings("ll-46ConnectionString").ConnectionString
 
-    ' Cadena de conexion a la base de datos'
-    Private ReadOnly connectionString As String = ConfigurationManager.ConnectionStrings("ll-46ConnectionString").ConnectionString
-
-    'Crear Persona'
-    Public Function create(Persona As Persona) As Boolean
+    Public Function create(Persona As Persona) As String
         Try
-            Dim sql As String = "INSERT INTO Personas (Nombre,Apellido,Edad) VALUES (@Nombre,@Apellido,@Edad)"
-            Dim parametros As New List(Of SqlParameter) From {
-                New SqlParameter("@Nombre", Persona.Nombre),
-                New SqlParameter("@Apellido", Persona.Apellido1),
-                New SqlParameter("@Edad", Persona.FechaNacimiento)
+            Dim sql As String = "INSERT INTO Personas (Nombre, Apellido1, Apellido2, Nacionalidad, fechaNacimiento, Telefono) 
+            VALUES (@Nombre, @Apellido1, @Apellido2, @Nacionalidad, @fechaNacimiento, @Telefono)"
+            Dim Parametros As New List(Of SqlParameter) From {
+            New SqlParameter("@Nombre", Persona.Nombre),
+            New SqlParameter("@Apellido1", Persona.Apellido1),
+            New SqlParameter("@Apellido2", Persona.Apellido2),
+            New SqlParameter("@Nacionalidad", Persona.Nacionalidad),
+            New SqlParameter("@fechaNacimiento", Persona.FechaNacimiento),
+            New SqlParameter("@Telefono", Persona.Telefono)
             }
 
-            Using connection As New SqlConnection(connectionString)
-
-                Using command As New SqlCommand(sql, connection)
-                    command.Parameters.AddRange(parametros.ToArray())
-                    connection.Open()
+            Using connetion As New SqlConnection(ConectionString)
+                Using command As New SqlCommand(sql, connetion)
+                    command.Parameters.AddRange(Parametros.ToArray())
+                    connetion.Open()
                     command.ExecuteNonQuery()
                 End Using
             End Using
-
         Catch ex As Exception
-            Return False
+            Return "Error al guardar la persona: " & ex.Message
         End Try
-        Return True
+        Return "Persona Guardada"
     End Function
 
-
-    'Eliminar persona'
     Public Function delete(ByRef id As Integer) As String
         Try
-            Dim sql As String = "DELETE FROM Personas WHERE ID = @id"
+            Dim sql As String = "DELETE FROM Personas WHERE idPersona = @idPersona"
             Dim Parametros As New List(Of SqlParameter) From {
-                New SqlParameter("@id", id)
+                New SqlParameter("@Id", id)
             }
-            Using connection As New SqlConnection(connectionString)
-
-                Using command As New SqlCommand(sql, connection)
+            Using connetion As New SqlConnection(ConectionString)
+                Using command As New SqlCommand(sql, connetion)
                     command.Parameters.AddRange(Parametros.ToArray())
-                    connection.Open()
+                    connetion.Open()
                     command.ExecuteNonQuery()
                 End Using
             End Using
-
         Catch ex As Exception
-
+            Return "Error al eliminar la persona: " & ex.Message
         End Try
-
-        Return "Persona Eliminada"
-
+        Return "Persona eliminada"
     End Function
 
-    'Metodo para el boton Actualizar
     Public Function update(ByRef Persona As Persona) As String
         Try
             Dim sql As String = "UPDATE Personas SET Nombre = @Nombre, Apellido = @Apellido, Edad = @Edad WHERE ID = @Id"
-
             Dim Parametros As New List(Of SqlParameter) From {
                 New SqlParameter("@Id", Persona.IdPersona),
                 New SqlParameter("@Nombre", Persona.Nombre),
                 New SqlParameter("@Apellido", Persona.Apellido1),
                 New SqlParameter("@Edad", Persona.FechaNacimiento)
             }
-
-            Using connection As New SqlConnection(connectionString)
-
-                Using command As New SqlCommand(sql, connection)
+            Using connetion As New SqlConnection(ConectionString)
+                Using command As New SqlCommand(sql, connetion)
                     command.Parameters.AddRange(Parametros.ToArray())
-                    connection.Open()
+                    connetion.Open()
                     command.ExecuteNonQuery()
                 End Using
             End Using
-
         Catch ex As Exception
-
+            Return "Error al actualizar la persona: " & ex.Message
         End Try
-        Return "Persona Actualizada"
+        Return "Persona actualizada"
     End Function
-
-
-
-
 End Class
