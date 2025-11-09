@@ -52,12 +52,13 @@ Public Class dbPersona
 
     Public Function update(ByRef Persona As Persona) As String
         Try
-            Dim sql As String = "UPDATE Personas SET Nombre = @Nombre, Apellido = @Apellido, Edad = @Edad WHERE ID = @Id"
+            Dim sql As String = "UPDATE Personas SET Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, FechaNacimiento = @FechaNacimiento WHERE idPersona = @idPersona"
             Dim Parametros As New List(Of SqlParameter) From {
-                New SqlParameter("@Id", Persona.IdPersona),
+                New SqlParameter("@idPersona", Persona.IdPersona),
                 New SqlParameter("@Nombre", Persona.Nombre),
-                New SqlParameter("@Apellido", Persona.Apellido1),
-                New SqlParameter("@Edad", Persona.FechaNacimiento)
+                New SqlParameter("@Apellido1", Persona.Apellido1),
+                New SqlParameter("@Apellido2", Persona.Apellido2),
+                New SqlParameter("@FechaNacimiento", Persona.FechaNacimiento)
             }
             Using connetion As New SqlConnection(ConectionString)
                 Using command As New SqlCommand(sql, connetion)

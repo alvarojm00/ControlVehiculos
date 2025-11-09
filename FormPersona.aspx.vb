@@ -73,7 +73,7 @@ Public Class FormPersona
 
         Catch ex As Exception
             lbl_mensaje.Text = "Error al eliminar la persona: " & ex.Message
-            SwalUtils.ShowSwalError(Me, "Error al guardar la persona: " & ex.Message)
+            SwalUtils.ShowSwalError(Me, "Error al eliminar la persona: " & ex.Message)
         End Try
 
     End Sub
@@ -88,19 +88,35 @@ Public Class FormPersona
     Protected Sub GV_personas_RowUpdating(sender As Object, e As GridViewUpdateEventArgs)
         'Actualizar persona
 
-        Dim id As Integer = Convert.ToInt32(GV_personas.DataKeys(e.RowIndex).Value)
-        Dim persona As Persona = New Persona With {
+        Try
+
+            Dim id As Integer = Convert.ToInt32(GV_personas.DataKeys(e.RowIndex).Value)
+            Dim persona = New Persona With {
             .Nombre = e.NewValues("Nombre"),
-            .Apellido1 = e.NewValues("Apellido"),
-            .Apellido2 = e.NewValues("Apellido"),
-            .FechaNacimiento = e.NewValues("Edad"),
+            .Apellido1 = e.NewValues("Apellido1"),
+            .Apellido2 = e.NewValues("Apellido2"),
+            .FechaNacimiento = e.NewValues("FechaNacimiento"),
+            .Nacionalidad = e.NewValues("Nacionalidad"),
+            .Telefono = e.NewValues("Telefono"),
             .IdPersona = id
         }
 
-        dbHelper.update(persona)
-        GV_personas.DataBind()
-        e.Cancel = True
-        GV_personas.EditIndex = -1
+            Dim mensaje = dbHelper.update(persona)
+            If mensaje.Contains("Error") Then
+                SwalUtils.ShowSwalError(Me, "Error ", mensaje)
+            Else
+                SwalUtils.ShowSwal(Me, mensaje)
+            End If
+
+            GV_personas.DataBind()
+            e.Cancel = True
+            GV_personas.EditIndex = -1
+
+        Catch ex As Exception
+
+            SwalUtils.ShowSwalError(Me, "Error al actualizar la persona: " & ex.Message)
+
+        End Try
 
     End Sub
 

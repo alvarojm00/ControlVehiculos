@@ -35,9 +35,9 @@
             <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
             <asp:BoundField DataField="Apellido1" HeaderText="Primer Apellido" SortExpression="Apellido1" />
             <asp:BoundField DataField="Apellido2" HeaderText="Segundo Apellido" SortExpression="Apellido2" />
-            <asp:BoundField DataField="Nacionalidad" HeaderText="Nacionalidad" SortExpression="Nacionalidad" />
-            <asp:BoundField DataField="FechaNacimiento" HeaderText="Fecha N." SortExpression="Fecha N." />
             <asp:BoundField DataField="Telefono" HeaderText="Telefono" SortExpression="Telefono" />
+            <asp:BoundField DataField="FechaNacimiento" HeaderText="Fecha Nacimientoo" SortExpression="FechaNacimiento" />
+            <asp:BoundField DataField="Nacionalidad" HeaderText="Nacionalidad" SortExpression="Nacionalidad" />
             <asp:CommandField ShowDeleteButton="true" ControlStyle-CssClass="btn btn-danger " />
         </Columns>
 
