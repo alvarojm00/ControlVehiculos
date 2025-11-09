@@ -1,4 +1,5 @@
 ﻿Imports Persona.Models
+Imports ControlVehiculos.Utils
 
 Public Class FormPersona
     Inherits System.Web.UI.Page
@@ -6,10 +7,13 @@ Public Class FormPersona
     Protected dbHelper As New dbPersona()
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
+        'Cargar datos iniciales si es necesario
     End Sub
 
+
+
     Protected Sub btn_guardar_Click(sender As Object, e As EventArgs)
+        'Guardar persona
         Try
             persona.Nombre = txtNombre.Text
             persona.Apellido1 = txtApellido1.Text
@@ -18,11 +22,21 @@ Public Class FormPersona
             persona.Nacionalidad = txtNacionalidad.Text
             persona.Telefono = txtTelefono.Text
 
-            lbl_mensaje.Text = dbHelper.create(persona)
+            Dim mensaje = dbHelper.create(persona)
+
+
+            If mensaje.Contains("Error") Then
+                SwalUtils.ShowSwalError(Me, "Error ", mensaje)
+            Else
+                SwalUtils.ShowSwal(Me, mensaje)
+            End If
+
             txtNombre.Text = ""
             txtApellido1.Text = ""
             txtApellido2.Text = ""
             txtfechaNacimiento.Text = ""
+            txtTelefono.Text = ""
+            txtNacionalidad.Text = ""
 
 
 
@@ -30,6 +44,7 @@ Public Class FormPersona
 
         Catch ex As Exception
             lbl_mensaje.Text = "Error al guardar la persona: " & ex.Message
+            SwalUtils.ShowSwalError(Me, "Error al guardar la persona: " & ex.Message)
 
         End Try
 
@@ -39,27 +54,39 @@ Public Class FormPersona
 
 
     Protected Sub GV_personas_RowDeleting(sender As Object, e As GridViewDeleteEventArgs)
-
+        'Eliminar persona
         Try
+
             Dim id As Integer = Convert.ToInt32(GV_personas.DataKeys(e.RowIndex).Value)
-            dbHelper.delete(id)
+
+            Dim mensaje = dbHelper.delete(id)
+
+
+            If mensaje.Contains("Error") Then
+                SwalUtils.ShowSwalError(Me, "Error ", mensaje)
+            Else
+                SwalUtils.ShowSwal(Me, mensaje)
+            End If
+
             e.Cancel = "True"
             GV_personas.DataBind()
 
         Catch ex As Exception
             lbl_mensaje.Text = "Error al eliminar la persona: " & ex.Message
+            SwalUtils.ShowSwalError(Me, "Error al guardar la persona: " & ex.Message)
         End Try
 
     End Sub
 
     Protected Sub GV_personas_RowCancelingEdit(sender As Object, e As GridViewCancelEditEventArgs)
-
+        'Cancelar edición
         GV_personas.EditIndex = -1
         GV_personas.DataBind()
 
     End Sub
 
     Protected Sub GV_personas_RowUpdating(sender As Object, e As GridViewUpdateEventArgs)
+        'Actualizar persona
 
         Dim id As Integer = Convert.ToInt32(GV_personas.DataKeys(e.RowIndex).Value)
         Dim persona As Persona = New Persona With {
@@ -78,10 +105,11 @@ Public Class FormPersona
     End Sub
 
     Protected Sub GV_personas_RowEditing(sender As Object, e As GridViewEditEventArgs)
-
+        'Iniciar edición
     End Sub
 
     Protected Sub GV_personas_SelectedIndexChanged(sender As Object, e As EventArgs)
+        'Seleccionar persona para editar
 
         Dim row As GridViewRow = GV_personas.SelectedRow()
         Dim id As Integer = Convert.ToInt32(row.Cells(2).Text)
@@ -97,7 +125,7 @@ Public Class FormPersona
     End Sub
 
     Protected Sub btnActualizar_Click(sender As Object, e As EventArgs)
-
+        'Actualizar persona editada
 
         Dim persona As Persona = New Persona With {
             .Nombre = txtNombre.Text,

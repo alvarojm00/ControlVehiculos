@@ -33,7 +33,7 @@ Public Class dbPersona
         Try
             Dim sql As String = "DELETE FROM Personas WHERE idPersona = @idPersona"
             Dim Parametros As New List(Of SqlParameter) From {
-                New SqlParameter("@Id", id)
+                New SqlParameter("@idPersona", id)
             }
             Using connetion As New SqlConnection(ConectionString)
                 Using command As New SqlCommand(sql, connetion)
@@ -42,10 +42,12 @@ Public Class dbPersona
                     command.ExecuteNonQuery()
                 End Using
             End Using
+            Return "Persona eliminada"
+
         Catch ex As Exception
             Return "Error al eliminar la persona: " & ex.Message
         End Try
-        Return "Persona eliminada"
+
     End Function
 
     Public Function update(ByRef Persona As Persona) As String

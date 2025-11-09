@@ -15,8 +15,8 @@
         <asp:TextBox ID="txtApellido1" CssClass="form-control" placeholder="Apellido1" runat="server"></asp:TextBox>
         <asp:TextBox ID="txtApellido2" CssClass="form-control" placeholder="Apellido2" runat="server"></asp:TextBox>
         <asp:TextBox ID="txtNacionalidad" CssClass="form-control" placeholder="Nacionalidad" runat="server"></asp:TextBox>
-        <asp:TextBox ID="txtfechaNacimiento" CssClass="form-control" placeholder="FechaNacimiento" runat="server"></asp:TextBox>
-        <asp:TextBox ID="txtTelefono" CssClass="form-control" TextMode="Date" placeholder="Telefono" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtfechaNacimiento" TextMode="Date" CssClass="form-control" placeholder="FechaNacimiento" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtTelefono" CssClass="form-control" placeholder="Telefono" runat="server"></asp:TextBox>
 
         <asp:Button ID="btn_guardar" CssClass="btn btn-primary" runat="server" Text="Guardar" OnClick="btn_guardar_Click" />
         <asp:Button ID="btnActualizar" CssClass="btn btn-primary" runat="server" Text="Actualizar" OnClick="btnActualizar_Click" />
@@ -35,6 +35,9 @@
             <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
             <asp:BoundField DataField="Apellido1" HeaderText="Primer Apellido" SortExpression="Apellido1" />
             <asp:BoundField DataField="Apellido2" HeaderText="Segundo Apellido" SortExpression="Apellido2" />
+            <asp:BoundField DataField="Nacionalidad" HeaderText="Nacionalidad" SortExpression="Nacionalidad" />
+            <asp:BoundField DataField="FechaNacimiento" HeaderText="Fecha N." SortExpression="Fecha N." />
+            <asp:BoundField DataField="Telefono" HeaderText="Telefono" SortExpression="Telefono" />
             <asp:CommandField ShowDeleteButton="true" ControlStyle-CssClass="btn btn-danger " />
         </Columns>
 
