@@ -23,5 +23,13 @@
         Me.Contrasena = contrasena
     End Sub
 
+    'Constructor para el registro
+    Public Sub New(nombreUsuario As String, contrasena As String, email As String)
+        Me.New(nombreUsuario, contrasena)
+        Me.Email = email
+    End Sub
 
+    'Constructor vacío
+    Public Sub New()
+    End Sub
 End Class

@@ -15,12 +15,12 @@ Public Class Registro
 
         If Password <> PasswordC Then
             SwalUtils.ShowSwalError(Me, "No coincide la contraseña")
+            Return
         End If
 
         Dim encryptador As Simple3Des = New Simple3Des("MiClaveSecreta123")  ' Clave para encriptar y desencriptar
         Dim pass As String = encryptador.EncryptData(Password) ' Encriptar la contraseña antes de guardarla
-        Dim usuario As Usuario = New Usuario(nombreUsuario, pass)
-        usuario.Email = TextEmail.Text
+        Dim usuario As Usuario = New Usuario(nombreUsuario, pass, TextEmail.Text)
 
         Dim mensaje = dbHelper.RegisterUser(usuario)
         If mensaje.Contains("Error") Then
