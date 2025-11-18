@@ -133,8 +133,10 @@ Public Class FormPersona
 
         txtNombre.Text = row.Cells(3).Text
         txtApellido1.Text = row.Cells(4).Text
-        txtApellido2.Text = row.Cells(4).Text
-        txtfechaNacimiento.Text = row.Cells(5).Text
+        txtApellido2.Text = row.Cells(5).Text
+        txtTelefono.Text = row.Cells(6).Text
+        txtfechaNacimiento.Text = row.Cells(7).Text
+        txtNacionalidad.Text = row.Cells(8).Text
 
         editando.Value = id
 

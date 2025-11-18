@@ -3,6 +3,8 @@
 Public Class dbPersona
     Public ReadOnly ConectionString As String = ConfigurationManager.ConnectionStrings("ll-46ConnectionString").ConnectionString
 
+    Dim dbHelper = New DdHelper() ' Clase manejar para manejar conexiones y comandos
+
     Public Function create(Persona As Persona) As String
         Try
             Dim sql As String = "INSERT INTO Personas (Nombre, Apellido1, Apellido2, Nacionalidad, fechaNacimiento, Telefono) 
@@ -16,13 +18,8 @@ Public Class dbPersona
             New SqlParameter("@Telefono", Persona.Telefono)
             }
 
-            Using connetion As New SqlConnection(ConectionString)
-                Using command As New SqlCommand(sql, connetion)
-                    command.Parameters.AddRange(Parametros.ToArray())
-                    connetion.Open()
-                    command.ExecuteNonQuery()
-                End Using
-            End Using
+            dbHelper.ExecuteNonQuery(sql, Parametros)
+
         Catch ex As Exception
             Return "Error al guardar la persona: " & ex.Message
         End Try
