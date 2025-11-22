@@ -17,6 +17,43 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"> </script>
 
+    <%--' Script para confirmación de borrado con sweetalert--%>
+    <script type="text/javascript">
+        function confirmarBorrado(btn) {
+            // Leer el href original del LinkButton (donde viene el __doPostBack)
+            var href = btn.getAttribute('href');
+            var match = href && href.match(/__doPostBack\('([^']*)','([^']*)'\)/);
+
+            if (!match) {
+                // Si por alguna razón no lo encuentra, no hacemos nada
+                return false;
+            }
+
+            var target = match[1];   // ctl00$MainContent$GV_Propietarios$...
+            var argument = match[2]; // Delete$0, etc.
+
+            Swal.fire({
+                title: '¿Eliminar registro?',
+                text: 'Esta acción no se puede deshacer.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    __doPostBack(target, argument);
+                }
+            });
+
+            // Cancelar el postback normal; solo lo haremos si confirma
+            return false;
+        }
+    </script>
+
+
+
+
+
 </head>
 
 <body>
@@ -49,9 +86,18 @@
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/About">Acerca de</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contacto</a></li>
+                         <% If(Autenticado = False) Then %>
+                            <li class="nav-item"><a class="nav-link" runat="server" href="~/Login">Login</a></li>
+                            <li Class="nav-item"><a class="nav-link" runat="server" href="~/Registro">Registro</a></li>
+                        <% End If %>
+                        <li class="nav-item" runat="server" ID="liAdmin" ><a class="nav-link" runat="server" href="~/Admin">Admin</a></li>
+                        <% If (Autenticado) Then %>
+                            <li class="nav-item"><a class="nav-link" runat="server" href="~/Home">Inicio</a></li>
+                            <li class="nav-item"><a class="nav-link" runat="server" href="~/FormPropietario">Propietario</a></li>
+                            <li class="nav-item"><a class="nav-link" runat="server" href="~/FormVehiculo">Vehiculo</a></li>
+                            <li class="nav-item"><a class="nav-link" runat="server" href="~/FormPersona">Persona</a></li>
+                            <li class="nav-item"><a class="nav-link" runat="server" >  <asp:Button ID="LogOut" runat="server" Text="Cerrar Sesion" OnClick="LogOut_Click"  /> </a></li>
+                        <% End If %>
                     </ul>
                 </div>
             </div>

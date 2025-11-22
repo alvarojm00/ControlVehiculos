@@ -1,21 +1,21 @@
 ﻿Public Class Propietario
     Inherits Persona 'Hereda las propiedades de la clase persona'
 
-    Private _idPropietario As Integer
+    Private _IdPropietario As Integer
     Private _numVehiculos As String
+    Private _IdPersona As Integer
 
 
 
     'Propiiedades'
     Public Property IdPropietario As Integer
         Get
-            Return _idPropietario
+            Return _IdPropietario
         End Get
         Set(value As Integer)
-            _idPropietario = value
+            _IdPropietario = value
         End Set
     End Property
-
     Public Property NumVehiculos As String
         Get
             Return _numVehiculos
@@ -25,14 +25,25 @@
         End Set
     End Property
 
+    Public Property IdPersona As Integer
+        Get
+            Return _IdPersona
+        End Get
+        Set(value As Integer)
+            _IdPersona = value
+        End Set
+    End Property
+
+
 
     'Constructores'
-    Public Sub New(idPropietario As Integer, numVehiculos As String)
+    Public Sub New(idPropietario As Integer, numVehiculos As String, IdPersona As Integer)
         Me.IdPropietario = idPropietario
         Me.NumVehiculos = numVehiculos
+        Me.IdPersona = IdPersona
     End Sub
 
-    Public Sub New(idPropietario As Integer, numVehiculos As String, persona As Persona)
+    Public Sub New(idPropietario As Integer, numVehiculos As String, IdPersona As Integer, persona As Persona)
         MyBase.New(
             persona.IdPersona, persona.Nombre,
             persona.Apellido1, persona.Apellido2, persona.Nacionalidad,
@@ -40,6 +51,7 @@
         )
         Me.IdPropietario = idPropietario
         Me.NumVehiculos = numVehiculos
+        Me.IdPersona = IdPersona
     End Sub
 
     Public Sub New()
