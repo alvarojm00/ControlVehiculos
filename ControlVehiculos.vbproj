@@ -222,6 +222,7 @@
     <Compile Include="db\dbLogin.vb" />
     <Compile Include="db\dbPersona.vb" />
     <Compile Include="db\dbPropietario.vb" />
+    <Compile Include="db\dbVehiculo.vb" />
     <Compile Include="Default.aspx.vb">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Default.aspx</DependentUpon>
@@ -304,7 +305,6 @@
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Utils\dbVehiculo.vb" />
     <Compile Include="Utils\DdHelper.vb" />
     <Compile Include="Utils\Simple3Des.vb" />
     <Compile Include="Utils\SwalUtils.vb" />

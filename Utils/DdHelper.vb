@@ -28,11 +28,11 @@ Public Class DdHelper
 
         Using conn As SqlConnection = GetConnection()
             Using cmd As New SqlCommand(query, conn)
-                If parameters IsNot Nothing Then
-                    cmd.Parameters.AddRange(parameters.ToArray())
+                If parameters IsNot Nothing Then ' Verificar si hay parámetros
+                    cmd.Parameters.AddRange(parameters.ToArray()) ' Agregar parámetros si existen
                 End If
-                If isStoredProcedure Then
-                    cmd.CommandType = CommandType.StoredProcedure
+                If isStoredProcedure Then ' 
+                    cmd.CommandType = CommandType.StoredProcedure ' Configurar como procedimiento almacenado
                 End If
                 Try
                     cmd.ExecuteNonQuery()

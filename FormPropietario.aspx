@@ -27,7 +27,6 @@
         OnSelectedIndexChanged="GV_Propietarios_SelectedIndexChanged"
         OnRowDataBound="GV_Propietarios_RowDataBound">
     <Columns>
-        <asp:CommandField ShowSelectButton="true" ControlStyle-CssClass="btn btn-success" />
         <asp:CommandField ShowEditButton="True" ControlStyle-CssClass="btn btn-primary" />
         <asp:BoundField DataField="idPropietario" HeaderText="ID Propietario" SortExpression="idPropietario" ReadOnly="True" />
         

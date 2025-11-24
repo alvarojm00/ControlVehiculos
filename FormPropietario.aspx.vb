@@ -104,7 +104,7 @@ Public Class FormPropietario
 
             ' La columna Eliminar es la última:
             ' 0 = seleccionar, 1 = editar, 2 = IdPropietario, 3 = IdPersona, 4 = eliminar
-            Dim btnDelete As LinkButton = TryCast(e.Row.Cells(4).Controls(0), LinkButton)
+            Dim btnDelete As LinkButton = TryCast(e.Row.Cells(3).Controls(0), LinkButton)
 
             If btnDelete IsNot Nothing AndAlso btnDelete.CommandName = "Delete" Then
                 btnDelete.OnClientClick = "return confirmarBorrado(this);"

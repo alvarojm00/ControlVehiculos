@@ -86,6 +86,7 @@
         Me.Placa = placa
     End Sub
 
+    'Constructor vacío
     Public Sub New()
     End Sub
 
